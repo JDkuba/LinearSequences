@@ -3,7 +3,7 @@ import java.util.function.IntSupplier;
 import java.util.stream.IntStream;
 
 class SequenceSupplier {
-    public static class RecurrenceStreamSupplier implements IntSupplier {
+    static class RecurrenceStreamSupplier implements IntSupplier {
         Matrix M;
         Matrix base;
         Matrix power;
@@ -48,4 +48,33 @@ class SequenceSupplier {
                 .filter(k -> isPrime.test(k))
                 .peek(k -> isPrime = isPrime.and(n -> n % k != 0));
     }
+
+    static class ThueMorseSupplier implements IntSupplier {
+        String s;
+        int curr;
+
+        ThueMorseSupplier() {
+            s = "0";
+            curr = 0;
+        }
+
+        @Override
+        public int getAsInt() {
+            if (curr < s.length()) {
+                curr += 1;
+                return Character.getNumericValue(s.charAt(curr - 1));
+            }
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < s.length(); ++i) {
+                if (s.charAt(i) == '0') sb.append('1');
+                else sb.append('0');
+            }
+            s = s + sb.toString();
+            return getAsInt();
+        }
+    }
+    static IntStream ThueMorse() {
+        return IntStream.generate(new ThueMorseSupplier());
+    }
+
 }
