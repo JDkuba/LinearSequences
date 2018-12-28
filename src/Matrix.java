@@ -1,5 +1,3 @@
-import java.math.BigInteger;
-
 /**
  * Matrix class is a class that represents 2D array of BigIntegers as mathematical matrix.
  * It is used for calculating linear recursive sequences.
@@ -19,47 +17,47 @@ import java.math.BigInteger;
 class Matrix {
     private final int rows;
     private final int cols;
-    private final BigInteger[][] data;
+    private final int[][] data;
 
     private Matrix(int rows, int cols) {
         this.rows = rows;
         this.cols = cols;
-        data = new BigInteger[rows][cols];
+        data = new int[rows][cols];
         for (int i = 0; i < rows; ++i) {
             for (int j = 0; j < cols; ++j) {
-                data[i][j] = BigInteger.ZERO;
+                data[i][j] = 0;
             }
         }
     }
 
-    Matrix(BigInteger[][] data) {
+    Matrix(int[][] data) {
         rows = data.length;
         cols = data[0].length;
         this.data = data;
     }
 
-    Matrix(BigInteger[] top_row) {
+    Matrix(int[] top_row) {
         this(top_row.length, top_row.length);
         data[0] = top_row;
         for (int i = 1; i < rows; i++) {
-            data[i][i - 1] = BigInteger.ONE;
+            data[i][i - 1] = 1;
         }
     }
 
 
     static Matrix identity(int n) {
         Matrix X = new Matrix(n, n);
-        for (int i = 0; i < n; i++) X.data[i][i] = BigInteger.ONE;
+        for (int i = 0; i < n; i++) X.data[i][i] = 1;
         return X;
     }
 
 
-    BigInteger getNum() {
+    Integer getNum() {
         return data[0][0];
     }
 
     int intVal() {
-        return data[0][0].intValue();
+        return data[0][0];
     }
 
     int dim() {
@@ -73,7 +71,7 @@ class Matrix {
         for (int i = 0; i < C.rows; i++) {
             for (int j = 0; j < C.cols; j++) {
                 for (int k = 0; k < A.cols; k++) {
-                    C.data[i][j] = C.data[i][j].add(A.data[i][k].multiply(B.data[k][j]));
+                    C.data[i][j] += (A.data[i][k] * B.data[k][j]);
                 }
             }
         }
