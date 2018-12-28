@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.IntPredicate;
 import java.util.function.IntSupplier;
 import java.util.stream.IntStream;
@@ -73,8 +75,33 @@ class SequenceSupplier {
             return getAsInt();
         }
     }
+
     static IntStream ThueMorse() {
         return IntStream.generate(new ThueMorseSupplier());
+    }
+
+    private static class CatalanSupplier implements IntSupplier {
+        private static List<Integer> catalans;
+
+        CatalanSupplier() {
+            catalans = new ArrayList<>();
+            catalans.add(1);
+        }
+
+        @Override
+        public int getAsInt() {
+            int res = catalans.get(catalans.size() - 1);
+            int tmp = 0;
+            for (int i = 0; i < catalans.size(); ++i) {
+                tmp += catalans.get(i) * catalans.get(catalans.size() - i - 1);
+            }
+            catalans.add(tmp);
+            return res;
+        }
+    }
+
+    static IntStream Catalan() {
+        return IntStream.generate(new CatalanSupplier());
     }
 
 }
