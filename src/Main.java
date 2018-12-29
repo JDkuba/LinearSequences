@@ -1,4 +1,5 @@
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 
 public class Main {
@@ -23,8 +24,16 @@ public class Main {
         tmc.limit(100).forEach(System.out::print);
 
         System.out.println();
-        
+
         IntStream catalan = SequenceSupplier.Catalan();
         catalan.limit(10).forEach(System.out::println);
+
+        System.out.println();
+
+
+        Stream<String> las = SequenceSupplier.LookandSay();
+        las.limit(10).forEach(System.out::println);
+
+        System.out.println();
     }
 }

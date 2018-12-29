@@ -2,7 +2,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.IntPredicate;
 import java.util.function.IntSupplier;
+import java.util.function.Supplier;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 class SequenceSupplier {
     static class RecurrenceStreamSupplier implements IntSupplier {
@@ -111,4 +113,39 @@ class SequenceSupplier {
         return IntStream.generate(new CatalanSupplier());
     }
 
+
+    private static class LookandSaySupplier implements Supplier<String> {
+        String s;
+
+        LookandSaySupplier() {
+            s = "1";
+        }
+
+        String lookandsay(String num) {
+            StringBuilder sb = new StringBuilder();
+            char r = num.charAt(0);
+            num = num.substring(1) + " ";
+            int k = 1;
+            for (int i = 0; i < num.length(); ++i) {
+                if (num.charAt(i) == r) k++;
+                else {
+                    sb.append(k).append(r);
+                    k = 1;
+                    r = num.charAt(i);
+                }
+            }
+            return sb.toString();
+        }
+
+        @Override
+        public String get() {
+            String ret = s;
+            s = lookandsay(s);
+            return ret;
+        }
+    }
+
+    static Stream<String> LookandSay() {
+        return Stream.generate(new LookandSaySupplier());
+    }
 }
