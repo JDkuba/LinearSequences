@@ -147,5 +147,51 @@ class SequenceSupplier {
         return Stream.generate(new LookandSaySupplier());
     }
 
+    private static class KolakoskiSupplier implements Supplier<Integer> {
+        int[] base;
+        int len;
+        List<Integer> memo;
+        int i, k, x;
 
+        KolakoskiSupplier(int[] b) {
+            base = b;
+            memo = new ArrayList<>();   //todo lined
+            i = 0;
+            k = 0;
+            x = 0;
+            len = base.length;
+        }
+
+        KolakoskiSupplier() {
+            this(new int[]{1, 2});
+        }
+
+        @Override
+        public Integer get() {
+            if (x < memo.size()) {
+                x++;
+                return memo.get(x - 1);
+            }
+            while (x >= memo.size()) {
+                memo.add(base[k % len]);
+                if (memo.get(k) > 1) {
+                    for (int j = 1; j < memo.get(k); ++j) {
+                        i++;
+                        memo.add(memo.get(i - 1));
+                    }
+                }
+                i++;
+                k++;
+            }
+            return get();
+        }
+    }
+
+
+    static Stream<Integer> Kolakoski() {
+        return Stream.generate(new KolakoskiSupplier());
+    }
+    static Stream<Integer> Kolakoski(int [] b) {
+        return Stream.generate(new KolakoskiSupplier(b));
+    }
 }
