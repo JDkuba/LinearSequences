@@ -18,7 +18,12 @@ public class Main {
 
         IntStream tm = SequenceSupplier.ThueMorse();
         tm.limit(100).forEach(System.out::print);
+        System.out.println();
+        IntStream tmc = SequenceSupplier.ThueMorseClosed();
+        tmc.limit(100).forEach(System.out::print);
 
+        System.out.println();
+        
         IntStream catalan = SequenceSupplier.Catalan();
         catalan.limit(10).forEach(System.out::println);
     }

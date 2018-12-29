@@ -80,6 +80,13 @@ class SequenceSupplier {
         return IntStream.generate(new ThueMorseSupplier());
     }
 
+    static IntStream ThueMorseClosed() {
+        return IntStream.iterate(0, i -> i + 1)
+                .map(n -> (Integer.toBinaryString(n)
+                        .chars()
+                        .reduce(0, (x, y) -> x + y)) % 2);
+    }
+
     private static class CatalanSupplier implements IntSupplier {
         private static List<Integer> catalans;
 
