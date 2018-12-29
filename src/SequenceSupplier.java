@@ -1,6 +1,8 @@
+import java.net.Inet4Address;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.IntPredicate;
+import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 
@@ -51,7 +53,7 @@ class SequenceSupplier {
                 .peek(k -> isPrime = isPrime.and(n -> n % k != 0));
     }
 
-    static class ThueMorseSupplier implements Supplier<Integer> {
+    private static class ThueMorseSupplier implements Supplier<Integer> {
         String s;
         int curr;
 
@@ -155,7 +157,7 @@ class SequenceSupplier {
 
         KolakoskiSupplier(int[] b) {
             base = b;
-            memo = new ArrayList<>();   //todo lined
+            memo = new ArrayList<>();
             i = 0;
             k = 0;
             x = 0;
@@ -191,7 +193,35 @@ class SequenceSupplier {
     static Stream<Integer> Kolakoski() {
         return Stream.generate(new KolakoskiSupplier());
     }
-    static Stream<Integer> Kolakoski(int [] b) {
+
+    static Stream<Integer> Kolakoski(int[] b) {
         return Stream.generate(new KolakoskiSupplier(b));
+    }
+
+    private static class TenThousandSupplier implements Supplier<Integer> {
+        List<Integer> memo;
+        int x;
+
+        TenThousandSupplier() {
+            memo = new ArrayList<>();
+            memo.add(1);
+            memo.add(1);
+            x = 0;
+        }
+
+        @Override
+        public Integer get() {
+            if (x == 0 || x == 1) {
+                x++;
+                return memo.get(x - 1);
+            }
+            memo.add(memo.get(memo.get(x - 1) - 1) + memo.get(x - memo.get(x - 1)));
+            x++;
+            return memo.get(x - 1);
+        }
+    }
+
+    static Stream<Integer> TenThousandSequence() {
+        return Stream.generate(new TenThousandSupplier());
     }
 }

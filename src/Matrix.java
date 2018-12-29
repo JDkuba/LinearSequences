@@ -1,5 +1,5 @@
 /**
- * Matrix class is a class that represents 2D array of BigIntegers as mathematical matrix.
+ * Matrix class is a class that represents 2D array of int as mathematical matrix.
  * It is used for calculating linear recursive sequences.
  * Sequence with coefficients a_0, ..., a_k is represented by matrix:
  * [[a_0,a_1,a_2,...,a_k],

@@ -46,5 +46,12 @@ public class Main {
 
         kol = SequenceSupplier.Kolakoski(new int[]{2, 1, 3, 1});
         kol.limit(20).map(x -> x.toString() + " ").forEach(System.out::print);
+
+        //A4001
+        System.out.println("\n\n$10000 sequence:");
+        Stream<Integer> tts = SequenceSupplier.TenThousandSequence();
+        tts.limit(20).map(x -> x.toString() + " ").forEach(System.out::print);
     }
 }
+
+//more fibonacci, another linear sequence,
