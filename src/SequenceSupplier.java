@@ -1,13 +1,11 @@
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.IntPredicate;
-import java.util.function.IntSupplier;
 import java.util.function.Supplier;
-import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 class SequenceSupplier {
-    static class RecurrenceStreamSupplier implements IntSupplier {
+    static class RecurrenceStreamSupplier implements Supplier<Integer> {
         Matrix M;
         Matrix base;
         Matrix power;
@@ -29,31 +27,31 @@ class SequenceSupplier {
 
 
         @Override
-        public int getAsInt() {
+        public Integer get() {
             int res = power.mul(base).getNum();
             power = power.mul(M);
             return res;
         }
     }
 
-    static IntStream RecurrenceStream(int[] coefs, int[] initial, int jump) {
-        return IntStream.generate(new RecurrenceStreamSupplier(coefs, initial, jump));
+    static Stream<Integer> RecurrenceStream(int[] coefs, int[] initial, int jump) {
+        return Stream.generate(new RecurrenceStreamSupplier(coefs, initial, jump));
     }
 
-    static IntStream RecurrenceStream(int[] coefs, int[] initial) {
-        return IntStream.generate(new RecurrenceStreamSupplier(coefs, initial));
+    static Stream<Integer> RecurrenceStream(int[] coefs, int[] initial) {
+        return Stream.generate(new RecurrenceStreamSupplier(coefs, initial));
     }
 
     private static IntPredicate isPrime = x -> true;
 
-    static IntStream PrimeStream() {
-        return IntStream
+    static Stream<Integer> PrimeStream() {
+        return Stream
                 .iterate(2, k -> k + 1)
                 .filter(k -> isPrime.test(k))
                 .peek(k -> isPrime = isPrime.and(n -> n % k != 0));
     }
 
-    static class ThueMorseSupplier implements IntSupplier {
+    static class ThueMorseSupplier implements Supplier<Integer> {
         String s;
         int curr;
 
@@ -63,7 +61,7 @@ class SequenceSupplier {
         }
 
         @Override
-        public int getAsInt() {
+        public Integer get() {
             if (curr < s.length()) {
                 curr += 1;
                 return Character.getNumericValue(s.charAt(curr - 1));
@@ -74,22 +72,22 @@ class SequenceSupplier {
                 else sb.append('0');
             }
             s = s + sb.toString();
-            return getAsInt();
+            return get();
         }
     }
 
-    static IntStream ThueMorse() {
-        return IntStream.generate(new ThueMorseSupplier());
+    static Stream<Integer> ThueMorse() {
+        return Stream.generate(new ThueMorseSupplier());
     }
 
-    static IntStream ThueMorseClosed() {
-        return IntStream.iterate(0, i -> i + 1)
+    static Stream<Integer> ThueMorseClosed() {
+        return Stream.iterate(0, i -> i + 1)
                 .map(n -> (Integer.toBinaryString(n)
                         .chars()
                         .reduce(0, (x, y) -> x + y)) % 2);
     }
 
-    private static class CatalanSupplier implements IntSupplier {
+    private static class CatalanSupplier implements Supplier<Integer> {
         private static List<Integer> catalans;
 
         CatalanSupplier() {
@@ -98,7 +96,7 @@ class SequenceSupplier {
         }
 
         @Override
-        public int getAsInt() {
+        public Integer get() {
             int res = catalans.get(catalans.size() - 1);
             int tmp = 0;
             for (int i = 0; i < catalans.size(); ++i) {
@@ -109,8 +107,8 @@ class SequenceSupplier {
         }
     }
 
-    static IntStream Catalan() {
-        return IntStream.generate(new CatalanSupplier());
+    static Stream<Integer> Catalan() {
+        return Stream.generate(new CatalanSupplier());
     }
 
 
@@ -148,4 +146,6 @@ class SequenceSupplier {
     static Stream<String> LookandSay() {
         return Stream.generate(new LookandSaySupplier());
     }
+
+
 }
