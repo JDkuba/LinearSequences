@@ -1,8 +1,6 @@
-import java.net.Inet4Address;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.IntPredicate;
-import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 
@@ -26,7 +24,6 @@ class SequenceSupplier {
         RecurrenceStreamSupplier(int[] coefs, int[] initial) {
             this(coefs, initial, 0);
         }
-
 
         @Override
         public Integer get() {
