@@ -1,4 +1,3 @@
-import javax.sound.midi.Sequence;
 import java.util.stream.Stream;
 
 
@@ -9,13 +8,13 @@ public class Main {
         int[] coefs = new int[]{1, 1};
         int[] initial = new int[]{1, 0};
         Stream<Integer> fib = Sequences.LinearRecursiveStream(coefs, initial);
-        fib.limit(10).map(x -> x.toString() + " ").forEach(System.out::print);
+        fib.limit(20).map(x -> x.toString() + " ").forEach(System.out::print);
 
         System.out.println("\n\nFibonacci sequence (from 20th element): ");
         coefs = new int[]{1, 1};
         initial = new int[]{1, 0};
         fib = Sequences.LinearRecursiveStream(coefs, initial, 20);
-        fib.limit(10).map(x -> x.toString() + " ").forEach(System.out::print);
+        fib.limit(20).map(x -> x.toString() + " ").forEach(System.out::print);
 
         //NO OEIS, just random linear recursive sequence
         //f(0)=1, f(1)=3, f(2)=2, f(n+3)=2*f(n+2)-f(n+1)-2*f(n)
@@ -24,13 +23,13 @@ public class Main {
         coefs = new int[]{2, -1, -2};
         initial = new int[]{2, 3, 1};
         Stream<Integer> rec = Sequences.LinearRecursiveStream(coefs, initial);
-        rec.limit(10).map(x -> x.toString() + " ").forEach(System.out::print);
+        rec.limit(20).map(x -> x.toString() + " ").forEach(System.out::print);
 
         //OEIS A000040
         System.out.println("\n\nPrimes sequence:");
 
         Stream<Integer> primes = Sequences.PrimeStream();
-        primes.limit(10).map(x -> x.toString() + " ").forEach(System.out::print);
+        primes.limit(20).map(x -> x.toString() + " ").forEach(System.out::print);
 
         //OEIS A010060
         System.out.println("\n\nThue-Morse sequence:");
@@ -45,9 +44,9 @@ public class Main {
         System.out.println("\n\nCatalan numbers:");
 
         Stream<Integer> catalan = Sequences.Catalan();
-        catalan.limit(10).map(x -> x.toString() + " ").forEach(System.out::print);
+        catalan.limit(20).map(x -> x.toString() + " ").forEach(System.out::print);
 
-        //OEIS A005150
+        //OEIS A005150, stream of Strings because it grows very fast
         System.out.println("\n\nLook and Say sequence:");
 
         Stream<String> las = Sequences.LookandSay();
@@ -80,5 +79,6 @@ public class Main {
         System.out.println("\n\nPi digits sequence:");
         Stream<Integer> pi = Sequences.PiSequence();
         pi.limit(150).forEach(System.out::print);
+        System.out.println();
     }
 }
