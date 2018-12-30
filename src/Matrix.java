@@ -56,10 +56,6 @@ class Matrix {
         return data[0][0];
     }
 
-    int intVal() {
-        return data[0][0];
-    }
-
     int dim() {
         return rows;
     }

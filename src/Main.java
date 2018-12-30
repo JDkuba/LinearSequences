@@ -1,3 +1,4 @@
+import javax.sound.midi.Sequence;
 import java.util.stream.Stream;
 
 
@@ -74,5 +75,10 @@ public class Main {
         System.out.println("\n\n$10000 sequence:");
         Stream<Integer> tts = Sequences.TenThousandSequence();
         tts.limit(20).map(x -> x.toString() + " ").forEach(System.out::print);
+
+        //OEIS A000796
+        System.out.println("\n\nPi digits sequence:");
+        Stream<Integer> pi = Sequences.PiSequence();
+        pi.limit(150).forEach(System.out::print);
     }
 }

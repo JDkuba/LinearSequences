@@ -1,3 +1,4 @@
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.IntPredicate;
@@ -258,5 +259,55 @@ class Sequences {
 
     static Stream<Integer> TenThousandSequence() {
         return Stream.generate(new TenThousandSupplier());
+    }
+
+    /**
+     * Pi digits generator with spigot algorithm
+     **/
+    private static class PiSupplier implements Supplier<Integer> {
+        final BigInteger TWO = BigInteger.valueOf(2);
+        final BigInteger THREE = BigInteger.valueOf(3);
+        final BigInteger FOUR = BigInteger.valueOf(4);
+        final BigInteger SEVEN = BigInteger.valueOf(7);
+
+        BigInteger quot, rest, t, it, curr, s;
+
+        PiSupplier() {
+            rest = BigInteger.ZERO;
+            quot = BigInteger.ONE;
+            t = BigInteger.ONE;
+            it = BigInteger.ONE;
+            curr = BigInteger.valueOf(3);
+            s = BigInteger.valueOf(3);
+        }
+
+
+        @Override
+        public Integer get() {
+            if (FOUR.multiply(quot).add(rest).subtract(t).compareTo(curr.multiply(t)) < 0) {
+                BigInteger new_rest;
+                Integer res = curr.intValue();
+                new_rest = BigInteger.TEN.multiply(rest.subtract(curr.multiply(t)));
+                curr = BigInteger.TEN.multiply(THREE.multiply(quot).add(rest)).divide(t).subtract(BigInteger.TEN.multiply(curr));
+                quot = quot.multiply(BigInteger.TEN);
+                rest = new_rest;
+                return res;
+            } else {
+                BigInteger new_n, new_rest;
+                new_rest = TWO.multiply(quot).add(rest).multiply(s);
+                new_n = quot.multiply(SEVEN).multiply(it).add(TWO).add(rest.multiply(s)).divide(t.multiply(s));
+                quot = quot.multiply(it);
+                t = t.multiply(s);
+                s = s.add(TWO);
+                it = it.add(BigInteger.ONE);
+                curr = new_n;
+                rest = new_rest;
+            }
+            return get();
+        }
+    }
+
+    static Stream<Integer> PiSequence() {
+        return Stream.generate(new PiSupplier());
     }
 }
