@@ -3,13 +3,13 @@
  * It is used for calculating linear recursive sequences.
  * Sequence with coefficients a_0, ..., a_k is represented by matrix:
  * [[a_0,a_1,a_2,...,a_k],
- *  [1,  0,  0,  ...,  0],
- *  [0,  1,  0,  ...,  0],
- *  [...................],
- *  [...................],
- *  [...................],
- *  [0,  0,  0,  ...,  1]]
- *
+ * [1,  0,  0,  ...,  0],
+ * [0,  1,  0,  ...,  0],
+ * [...................],
+ * [...................],
+ * [...................],
+ * [0,  0,  0,  ...,  1]]
+ * <p>
  * To find n-th element of sequence it is enough to take n_th power of this matrix and multiply it by
  * initial values vector. The result is vertical vector [f(n), f(n-1),..., f(n-k)]
  **/
